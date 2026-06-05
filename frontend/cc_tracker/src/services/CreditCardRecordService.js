@@ -1,22 +1,20 @@
-import axios from "axios";
-
-const API_URL = "http://127.0.0.1:8000/api/credit-card-records";
+import api from "./api";
 
 async function createRecord(data) {
-  const response = await axios.post(API_URL, data);
+  const response = await api.post("/credit-card-records", data);
 
   return response.data;
 }
 
 async function deleteRecord(id) {
-  const response = await axios.delete(`${API_URL}/${id}`);
+  const response = await api.delete(`/credit-card-records/${id}`);
 
   return response.data;
 }
 
 async function makePayment(recordId, amount) {
-  const response = await axios.post(
-    `${API_URL}/${recordId}/pay`,
+  const response = await api.post(
+    `/credit-card-records/${recordId}/pay`,
 
     {
       payment_amount: amount,

@@ -1,10 +1,8 @@
-import axios from "axios";
-
-const API_URL = "http://127.0.0.1:8000/api/dashboard";
+import api from "./api";
 
 export default {
   async getDashboardData() {
-    const response = await axios.get(API_URL);
+    const response = await api.get("/dashboard");
 
     return response.data;
   },
