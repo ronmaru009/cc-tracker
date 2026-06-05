@@ -93,11 +93,11 @@ class DashboardController extends Controller
             LoanPayment::select(
 
                 DB::raw("
-                    DATE_FORMAT(
-                        due_date,
-                        '%Y-%m'
-                    ) as month
-                "),
+                TO_CHAR(
+                    due_date,
+                    'YYYY-MM'
+                ) as month
+            "),
 
                 DB::raw(
                     'SUM(amount)
@@ -122,9 +122,9 @@ class DashboardController extends Controller
             Bill::select(
 
                 DB::raw("
-                    DATE_FORMAT(
+                    TO_CHAR(
                         due_date,
-                        '%Y-%m'
+                        'YYYY-MM'
                     ) as month
                 "),
 
