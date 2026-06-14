@@ -50,4 +50,4 @@ Route::apiResource('loans',LoanController::class);
 Route::apiResource('debts', DebtController::class);
 Route::apiResource('credit-cards', CreditCardController::class);
 Route::apiResource('credit-card-records', CreditCardRecordController::class);
-Route::apiResource('bills', App\Http\Controllers\Api\BillController::class);
+Route::apiResource('bills', BillController::class);
