@@ -22,7 +22,7 @@ class CreditCardRecordController extends Controller
             'minimum_due' => 'nullable|numeric',
             'payment_amount' => 'nullable|numeric',
             'payment_date' => 'nullable|date',
-            'due_date' => 'nullable|date',
+            'due_date' => 'required|date',
             'points_earned' => 'nullable|numeric',
             'remarks' => 'nullable'
         ]);

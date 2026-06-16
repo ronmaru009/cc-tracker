@@ -135,7 +135,10 @@
               </h2>
 
               <p class="text-white/40 text-sm mt-1">
-                {{ record.payment_date || "No payment yet" }}
+                Due: {{ record.due_date || "No due date" }}
+              </p>
+              <p class="text-white/40 text-sm mt-1">
+                Payment Date: {{ record.payment_date || "No payment yet" }}
               </p>
             </div>
 

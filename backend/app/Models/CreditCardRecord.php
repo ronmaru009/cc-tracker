@@ -12,6 +12,7 @@ class CreditCardRecord extends Model
         'month',
         'balance',
         'minimum_due',
+        'due_date',  
         'payment_amount',
         'payment_date',
         'points_earned',

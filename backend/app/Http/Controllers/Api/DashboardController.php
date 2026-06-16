@@ -37,15 +37,14 @@ class DashboardController extends Controller
 
             ->sum(function ($card) {
 
-                return
-
-                    $card->records()
-
+                $record = $card->records()
                     ->latest()
+                    ->first();
 
-                    ->value('balance')
+                $balance = (float) ($record->balance ?? 0);
+                $paid = (float) ($record->payment_amount ?? 0);
 
-                    ?? 0;
+                return max(0, $balance - $paid);
             })
 
             +
@@ -56,11 +55,21 @@ class DashboardController extends Controller
 
             $totalBills;
 
-        $totalLimit =
-            $cards->sum('credit_limit');
+        $availableCredit =
+            $cards->sum(function ($card) {
+                $record = $card->records()
+                    ->latest()
+                    ->first();
 
-        $totalAvailable =
-            $totalLimit - $totalDebt;
+                $balance = (float) ($record->balance ?? 0);
+                $paid = (float) ($record->payment_amount ?? 0);
+                $remaining = max(0, $balance - $paid);
+
+                return max(0, (float) $card->credit_limit - $remaining);
+            });
+
+        $totalLimit = $availableCredit;
+        $totalAvailable = $availableCredit;
 
         $utilization =
             $totalLimit > 0
@@ -79,7 +88,7 @@ class DashboardController extends Controller
                 'month',
 
                 DB::raw(
-                    'SUM(balance)
+                    'SUM(balance - payment_amount)
                     as total'
                 )
             )
@@ -187,11 +196,11 @@ class DashboardController extends Controller
 
     ->map(function ($card) {
 
-        $latestRecord =
-
-            $card->records()
-                ->latest()
-                ->first();
+            $latestRecord = $card->records()
+            ->whereNotNull('due_date')
+            ->whereRaw('(balance - IFNULL(payment_amount, 0)) > 0')
+            ->orderBy('due_date')
+            ->first();
 
         if (
             !$latestRecord ||
@@ -220,6 +229,11 @@ class DashboardController extends Controller
                 false
             );
 
+        $paidAmount = (float) ($latestRecord->payment_amount ?? 0);
+        $minimumDue = (float) ($latestRecord->minimum_due ?? 0);
+        $remainingBalance = max(0, (float) $latestRecord->balance - $paidAmount);
+        $isOverdue = $remainingBalance > 0 && $paidAmount > 0 && $paidAmount < $minimumDue;
+
         return [
 
             'type' => 'card',
@@ -236,10 +250,12 @@ class DashboardController extends Controller
 
                 $dueInDays,
 
-            'amount_due' =>
-
-                $latestRecord->balance
-                ?? 0,
+            'amount_due' => max(
+                0,
+                $latestRecord->balance -
+                ($latestRecord->payment_amount ?? 0)
+            ),
+            'is_overdue' => $isOverdue,
 
             'statement_date' =>
 
@@ -367,10 +383,14 @@ $loanDueDates =
     )
 
     ->filter(function ($due) {
+            if (!is_array($due) || !isset($due['due_date'])) {
+                return false;
+            }
 
-        return
+            $dueInDays = (int) ($due['due_in_days'] ?? 0);
+            $isOverdue = (bool) ($due['is_overdue'] ?? false);
 
-            $due['due_in_days'] <= 15;
+            return $dueInDays >= 0 || $isOverdue;
     })
 
     ->sortBy(function ($due) {

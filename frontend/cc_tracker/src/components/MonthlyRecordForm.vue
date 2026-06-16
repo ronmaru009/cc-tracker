@@ -100,6 +100,14 @@
             />
           </div>
 
+          <!-- Due Date -->
+
+          <div>
+            <label class="form-label"> Due Date </label>
+
+            <input v-model="form.due_date" type="date" class="glass-input" />
+          </div>
+
           <!-- DATE -->
 
           <div>
@@ -184,17 +192,12 @@ const emit = defineEmits(["saved", "cancel"]);
 
 const form = ref({
   month: "",
-
   balance: "",
-
   minimum_due: "",
-
   payment_amount: "",
-
+  due_date: "",
   payment_date: "",
-
   points_earned: "",
-
   remarks: "",
 });
 
@@ -227,7 +230,8 @@ async function submit() {
     !selectedMonth.value ||
     !selectedYear.value ||
     !form.value.balance ||
-    !form.value.minimum_due
+    !form.value.minimum_due ||
+    !form.value.due_date
   ) {
     alert("Please complete required fields.");
 

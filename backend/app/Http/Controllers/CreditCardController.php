@@ -22,7 +22,6 @@ class CreditCardController extends Controller
             'current_balance' => 'required|numeric',
             'interest_rate' => 'required|numeric',
             'billing_day' => 'nullable|numeric',
-            'due_day' => 'nullable|numeric',
             'start_date' => 'nullable|date',
         ]);
 
@@ -59,7 +58,6 @@ class CreditCardController extends Controller
             'interest_rate' => 'required|numeric',
             'minimum_due' => 'nullable|numeric',
             'billing_day' => 'nullable|numeric',
-            'due_day' => 'nullable|numeric',
             'start_date' => 'nullable|date',
         ]);
         $card->update($validated);

@@ -120,7 +120,7 @@
           </div>
 
           <div class="col-span-3 stat-card transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-2xl hover:shadow-violet-500/20 hover:border-violet-400/30">
-            <p class="stat-title">Total Limits</p>
+            <p class="stat-title">Available Credit</p>
 
             <h2 class="stat-value">
               ₱{{ formatMoney(dashboard?.totalLimit) }}
@@ -371,13 +371,17 @@
                     <p
                       class="text-sm font-medium mt-1"
                       :class="
-                        due.due_in_days < 0 ? 'text-red-400' : 'text-white/50'
+                        due.is_overdue || due.due_in_days < 0
+                          ? 'text-red-400'
+                          : 'text-white/50'
                       "
                     >
                       {{
-                        due.due_in_days < 0
-                          ? `${Math.abs(due.due_in_days)} days overdue`
-                          : `Due in ${due.due_in_days} days`
+                        due.is_overdue
+                          ? 'Overdue'
+                          : due.due_in_days < 0
+                            ? `${Math.abs(due.due_in_days)} days overdue`
+                            : `Due in ${due.due_in_days} days`
                       }}
                     </p>
                   </div>

@@ -15,7 +15,6 @@ class CreditCard extends Model
     'interest_rate',
     'minimum_due',
     'billing_day',
-    'due_day',
     'start_date'
 ];
 
