@@ -1,20 +1,35 @@
 const cardImages = {
+  "BPI Amore": "/img/Cards/bpi-amore.png",
+  "RCBC JCB Gold": "/img/Cards/rcbc-jcb-gold.png",
+  "RCBC Flex Visa": "/img/Cards/rcbc-flex.png",
+  "UB Rewards Platinum Visa": "/img/Cards/UB Rewards.png",
+  "UB U Visa Platinum": "/img/Cards/UBU.png",
+  "BOC Mastercard": "/img/Cards/BOC.png",
+  "CBC Mastercard": "/img/Cards/CBC Freedom.png",
+  "EastWest JCB Gold": "/img/Cards/EW JCB.jpeg",
+  "Atome Mastercard": "/img/Cards/atome.jpg",
+  "BDO Classic": "/img/bdo-classic.png",
+  "UB Platinum": "/img/ub-platinum.png",
+};
 
-    'BPI Amore':
-        '/img/Cards/bpi-amore.png',
+export function getCardImage(cardNameOrPath) {
+  if (!cardNameOrPath) {
+    return "/img/default-card.png";
+  }
 
-    'RCBC JCB Gold':
-        '/img/Cards/rcbc-jcb-gold.png',
+  const normalized = String(cardNameOrPath).trim();
 
-    'BDO Classic':
-        '/img/bdo-classic.png',
+  if (normalized.startsWith("/")) {
+    return normalized;
+  }
 
-    'UB Platinum':
-        '/img/ub-platinum.png'
-}
+  if (normalized.startsWith("../") || normalized.startsWith("./")) {
+    return normalized.replace(/^\.{1,2}\//, "/");
+  }
 
-export function getCardImage(cardName) {
+  if (normalized.startsWith("img/")) {
+    return `/${normalized}`;
+  }
 
-    return cardImages[cardName]
-        || '/img/default-card.png'
+  return cardImages[normalized] || "/img/default-card.png";
 }

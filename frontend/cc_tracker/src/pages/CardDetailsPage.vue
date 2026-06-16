@@ -45,7 +45,10 @@
       <div
         class="col-span-5 relative overflow-hidden rounded-[30px] border border-white/10 bg-white/5 backdrop-blur-2xl p-6"
       >
-        <img :src="getCardImage(card.name)" class="w-full rounded-3xl" />
+        <img
+          :src="getCardImage(card.card_image || card.name)"
+          class="w-full rounded-3xl"
+        />
 
         <div
           class="absolute bottom-10 right-10 px-4 py-2 rounded-2xl bg-black/40 border border-white/10 text-white text-sm"

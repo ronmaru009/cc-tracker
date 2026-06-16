@@ -1,35 +1,34 @@
 <template>
   <div class="card">
-    <img :src="card.card_image || defaultImage" class="card-img" />
+    <img :src="cardImage" class="card-img" />
 
     <div class="card-info">
       <h3>{{ card.name }}</h3>
       <p>•••• {{ card.card_last_four }}</p>
 
-      <div class="balance">
-        ₱{{ card.balance }} / ₱{{ card.credit_limit }}
-      </div>
+      <div class="balance">₱{{ card.balance }} / ₱{{ card.credit_limit }}</div>
 
-      <div class="utilization">
-        {{ utilization }}%
-      </div>
+      <div class="utilization">{{ utilization }}%</div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed } from "vue";
+import { getCardImage } from "../helpers/cardImages";
 
 const props = defineProps({
-  card: Object
-})
+  card: Object,
+});
 
-const defaultImage = '../img/Cards/bpi-amore.png'
+const cardImage = computed(() =>
+  getCardImage(props.card?.card_image || props.card?.name),
+);
 
 const utilization = computed(() => {
-  if (!props.card.credit_limit) return 0
-  return ((props.card.balance / props.card.credit_limit) * 100).toFixed(1)
-})
+  if (!props.card.credit_limit) return 0;
+  return ((props.card.balance / props.card.credit_limit) * 100).toFixed(1);
+});
 </script>
 
 <style scoped>
@@ -40,7 +39,9 @@ const utilization = computed(() => {
   background: #1e1e2f;
   color: white;
   margin: 20px 20px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 .card:hover {
   transform: translateY(-6px);

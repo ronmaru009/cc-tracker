@@ -81,47 +81,47 @@ const cards = [
   {
     bank: "RCBC",
     name: "RCBC Flex Visa",
-    image: "../img/Cards/rcbc-flex.png",
+    image: "/img/Cards/rcbc-flex.png",
   },
   {
     bank: "RCBC",
     name: "RCBC JCB Gold",
-    image: "../img/Cards/rcbc-jcb-gold.png",
+    image: "/img/Cards/rcbc-jcb-gold.png",
   },
   {
     bank: "BPI",
     name: "BPI Amore",
-    image: "../img/Cards/bpi-amore.png",
+    image: "/img/Cards/bpi-amore.png",
   },
   {
     bank: "UnionBank",
     name: "UB Rewards Platinum Visa",
-    image: "../img/Cards/UBU.png",
+    image: "/img/Cards/UBU.png",
   },
   {
     bank: "UnionBank",
     name: "UB U Visa Platinum",
-    image: "../img/Cards/UB Rewards.png",
+    image: "/img/Cards/UB Rewards.png",
   },
   {
     bank: "Bank Of Commerce",
     name: "BOC Mastercard",
-    image: "../img/Cards/BOC.png",
+    image: "/img/Cards/BOC.png",
   },
   {
     bank: "Chinabank",
     name: "CBC Mastercard",
-    image: "../img/Cards/CBC Freedom.png",
+    image: "/img/Cards/CBC Freedom.png",
   },
   {
     bank: "EastWest",
     name: "EastWest JCB Gold",
-    image: "../img/Cards/EW JCB.jpeg",
+    image: "/img/Cards/EW JCB.jpeg",
   },
   {
     bank: "Atome",
     name: "Atome Mastercard",
-    image: "../img/Cards/atome.jpg",
+    image: "/img/Cards/atome.jpg",
   },
 ];
 

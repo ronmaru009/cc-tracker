@@ -95,7 +95,7 @@
               <!-- IMAGE -->
 
               <img
-                :src="getCardImage(card.name)"
+                :src="getCardImage(card.card_image || card.name)"
                 class="w-full rounded-3xl shadow-2xl shadow-black/30"
               />
 

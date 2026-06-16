@@ -142,7 +142,7 @@
                 >
                   <div class="absolute card-wrapper">
                     <img
-                      :src="card.card_image.replace('..', '')"
+                      :src="getCardImage(card.card_image || card.name)"
                       class="w-[380px] rounded-[28px] shadow-2xl transition-all duration-700"
                     />
                   </div>
@@ -159,6 +159,7 @@
 import TiltCard from "../components/TiltCard.vue";
 import { onMounted, computed, ref } from "vue";
 import { useCardStore } from "../stores/cardStore";
+import { getCardImage } from "../helpers/cardImages";
 
 const cardStore = useCardStore();
 
@@ -186,16 +187,6 @@ function computeTransform(displayIndex) {
 onMounted(async () => {
   await cardStore.fetchCards();
 });
-
-function getCardImage(cardImage) {
-  const map = {
-    "BPI Amore": "/img/Cards/bpi-amore.png",
-    "RCBC JCB Gold": "/img/Cards/rcbc-jcb-gold.png",
-    // 'ew-visa-platinum' : '/img/Cards/ew-visa-platinum.png'
-  };
-
-  return map[cardImage];
-}
 </script>
 
 <style scoped>

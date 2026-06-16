@@ -15,7 +15,7 @@
         ></div>
 
         <img
-          :src="form.card_image"
+          :src="cardImagePreview"
           class="relative z-10 w-full rounded-3xl shadow-2xl shadow-black/30"
         />
 
@@ -145,14 +145,15 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import { useCardStore } from "../stores/cardStore";
+import { getCardImage } from "../helpers/cardImages";
 
 const props = defineProps({
   card: Object,
 });
 
-const emit = defineEmits(["saved, back"]);
+const emit = defineEmits(["saved", "back"]);
 
 const cardStore = useCardStore();
 
@@ -174,11 +175,26 @@ watch(
   () => props.card,
   (val) => {
     if (val) {
-      form.value.name = val.name;
-      form.value.card_image = val.image;
+      form.value.id = val.id || null;
+      form.value.name = val.name || "";
+      form.value.card_last_four = val.card_last_four || "";
+      form.value.credit_limit = val.credit_limit || "";
+      form.value.current_balance = val.current_balance || 0;
+      form.value.interest_rate = val.interest_rate || "";
+      form.value.minimum_due = val.minimum_due || "";
+      form.value.billing_day = val.billing_day || "";
+      form.value.due_day = val.due_day || "";
+      form.value.start_date = val.start_date || "";
+      form.value.card_image = getCardImage(
+        val.card_image || val.image || val.name,
+      );
     }
   },
   { immediate: true },
+);
+
+const cardImagePreview = computed(() =>
+  getCardImage(form.value.card_image || form.value.name),
 );
 
 async function submit() {
